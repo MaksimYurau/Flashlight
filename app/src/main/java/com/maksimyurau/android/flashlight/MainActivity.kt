@@ -4,10 +4,11 @@ import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import android.widget.ImageButton
+import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var mSwitchOnOffFlashLightButton: Button
+    private lateinit var mSwitchOnOffFlashLightButton: ImageButton
     var flashLightStatus: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +29,12 @@ class MainActivity : AppCompatActivity() {
             if (!flashLightStatus) {
                 try {
                     cameraManager.setTorchMode(cameraListId, true)
-                    mSwitchOnOffFlashLightButton.setText(R.string.off)
+                    mSwitchOnOffFlashLightButton.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this,
+                            R.drawable.torch_on
+                        )
+                    )
                     flashLightStatus = true
                 } catch (e: CameraAccessException) {
                     e.printStackTrace()
@@ -36,7 +42,12 @@ class MainActivity : AppCompatActivity() {
             } else {
                 try {
                     cameraManager.setTorchMode(cameraListId, false)
-                    mSwitchOnOffFlashLightButton.setText(R.string.on)
+                    mSwitchOnOffFlashLightButton.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this,
+                            R.drawable.torch_off
+                        )
+                    )
                     flashLightStatus = false
                 } catch (e: CameraAccessException) {
                     e.printStackTrace()
